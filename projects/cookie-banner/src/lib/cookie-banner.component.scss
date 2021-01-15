@@ -1,0 +1,184 @@
+$breakpoints: (
+  xs: 576px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+  xlg: 1600px
+);
+
+@mixin respond-below($breakpoint) {
+
+    // If the breakpoint exists in the map.
+    @if map-has-key($breakpoints, $breakpoint) {
+  
+      // Get the breakpoint value.
+      $breakpoint-value: map-get($breakpoints, $breakpoint);
+  
+      // Write the media query.
+     
+  
+    // If the breakpoint doesn't exist in the map.
+    } @else {
+  
+      // Log a warning.
+      @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+}
+
+.cookie-banner {
+    display: block;
+    position: fixed;
+    width: 75%;
+    min-height: 10rem;
+    bottom: 0;
+    left: 50%;
+    padding: 2rem 1.5rem;
+    transform: translateX(-50%);
+    animation: 1s ease-out slideInFromBottom;
+    background-color: $color-cookie-background;
+    text-align: center;
+
+    @include respond-below(xs) {
+        width: 100%;
+        padding: 1rem .5rem;
+    }
+
+    &__title {
+        display: block;
+        width: 100%;
+        font-size: 3rem;
+
+        @include respond-below(xs) {
+            font-size: 2rem;
+        }
+    }
+
+    &__description {
+        display: block;
+        width: 100%;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+
+        @include respond-below(xs) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__checkbox-container {
+        display: block;
+    }
+
+    &__checkbox-wrap {
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: 2rem;
+        }
+
+        @include respond-below(xs) {
+            &:not(:last-child) {
+                margin: 0;
+            }
+        }
+    }
+
+    &__checkbox {
+        visibility: hidden;
+    }
+
+    &__checkbox-label {
+        display: inline-block;
+        height: 4rem;
+        font-size: 2rem;
+        vertical-align: middle;
+        cursor: pointer;
+
+        @include respond-below(xs) {
+            font-size: 1.5rem;
+        }
+
+        &::before {
+            display: inline-block;
+            content: "\2713";
+            width: 4rem;
+            height: 4rem;
+            margin-right: 1rem;
+            color: transparent;
+            border: 1px solid $color-grey;
+
+            @include respond-below(xs) {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+    }
+
+    &__checkbox:checked + &__checkbox-label::before {
+        color: #fff;
+        background-color: $color-primary;
+    }
+
+    &__button-wrap {
+        display: block;
+        width: 100%;
+        padding: 3rem 0;
+
+        @include respond-below(xs) {
+            padding: 1rem 0;
+        }
+    }
+
+    &__button {
+        font-size: 2rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 10rem;
+
+        @include respond-below(xs) {
+            font-size: 1.5rem;
+        }
+
+        &--primary {
+            display: inline-block;
+            color: $color-white;
+            background-color: $color-primary;
+            padding: .5rem 1.5rem;
+
+            &:hover {
+                background-color: $color-secondary;
+                box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+                transform: translateY(-3px);
+            }
+        }
+
+        &--outline {
+            text-decoration: underline;
+
+            &:hover {
+                color: $color-secondary;
+                box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+                transform: translateY(-3px);
+            }
+        }
+
+        &:not(:last-child) {
+            margin-right: 3rem;
+        }
+
+        @include respond-below(xs) {
+            &:not(:last-child) {
+                margin-right: 0;
+                margin-bottom: 3rem;
+            }
+        }
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translate(-50%, 100%);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
