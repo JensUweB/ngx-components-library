@@ -57,15 +57,20 @@ export class CookieBannerComponent implements OnInit {
         this.cookieForm.get('preferences').setValue(this.options.labelPreferences ? true : false);
         this.cookieForm.get('comfort').setValue(this.options.labelComfort ? true : false);
     }
-    setTimeout(() => {
-      this.cookieService.setCookieConsent({
-        necessary: true,
-        analythics: this.cookieForm.get('analythics').value,
-        marketing: this.cookieForm.get('marketing').value,
-        preferences: this.cookieForm.get('preferences').value,
-        comfort: this.cookieForm.get('comfort').value
-      });
-    }, 2000);
+    this.cookieService.setCookieConsent({
+      necessary: true,
+      analythics: this.cookieForm.get('analythics').value,
+      marketing: this.cookieForm.get('marketing').value,
+      preferences: this.cookieForm.get('preferences').value,
+      comfort: this.cookieForm.get('comfort').value
+    });
+
+    this.bannerFadeOut();
+  }
+
+  bannerFadeOut(): void {
+    const doc = document.getElementById('cookie-banner') as HTMLDivElement;
+    doc.style.animation = '1s ease-out forwards slideOutToBottom';
   }
 
 }

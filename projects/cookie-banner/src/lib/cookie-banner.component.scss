@@ -15,7 +15,9 @@ $breakpoints: (
       $breakpoint-value: map-get($breakpoints, $breakpoint);
   
       // Write the media query.
-     
+      @media (max-width: $breakpoint-value) {
+        @content;
+      }
   
     // If the breakpoint doesn't exist in the map.
     } @else {
@@ -34,7 +36,7 @@ $breakpoints: (
     left: 50%;
     padding: 2rem 1.5rem;
     transform: translateX(-50%);
-    animation: 1s ease-out slideInFromBottom;
+    animation: 1s ease-out forwards slideInFromBottom;
     background-color: $color-cookie-background;
     text-align: center;
 
@@ -180,5 +182,14 @@ $breakpoints: (
     }
     100% {
         transform: translate(-50%, 0);
+    }
+}
+
+@keyframes slideOutToBottom {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    100% {
+        transform: translate(-50%, 100%);
     }
 }
