@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build cookie-banner",
+    "build": "ng build cookie-banner --prod",
     "pack-banner": "cd dist/cookie-banner && npm pack",
+    "publish": "npm publish dist/cookie-banner",
     "test": "ng test",
     "lint": "ng lint"
   },
