@@ -71,7 +71,7 @@ export class AppComponent {
 <router-outlet></router-outlet>
 <lib-cookie-banner [options]="cookieOptions"></lib-cookie-banner>
 ```
-The CookieConsent object, which includes the user cookie selection, will be stored in "cookieConsent" session storage variable.
+The CookieConsent object, which includes the user cookie selection, will be stored in "cookieConsent" localStorage variable.
 
 ## Subscribe to Cookie Consent
 The last thing to do is to subscripe to getCookieConsent and load your content,

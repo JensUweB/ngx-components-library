@@ -44,10 +44,18 @@ export class CookieBannerComponent implements OnInit {
       comfort: false
     });
 
-    this.cookieService.showCookieBanner.subscribe((data) => this.showBanner = data);
+    // tslint:disable-next-line: deprecation
+    this.cookieService.showCookieBanner.subscribe({
+      next: (data) => {
+        this.showBanner = data;
+      }
+    });
   }
 
   ngOnInit(): void {
+    if (!this.showBanner) {
+      this.bannerFadeOut(0);
+    }
   }
 
   saveCookies(all?: boolean): void {
@@ -68,9 +76,9 @@ export class CookieBannerComponent implements OnInit {
     this.bannerFadeOut();
   }
 
-  bannerFadeOut(): void {
+  bannerFadeOut(time = 1): void {
     const doc = document.getElementById('cookie-banner') as HTMLDivElement;
-    doc.style.animation = '1s ease-out forwards slideOutToBottom';
+    doc.style.animation = time + 's ease-out forwards slideOutToBottom';
   }
 
 }

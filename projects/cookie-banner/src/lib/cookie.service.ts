@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -24,8 +25,14 @@ export class CookieService {
     private _cookieConsent: CookieConsent;
 
     constructor(private router: Router) {
+    }
+
+    /**
+     * Initializes the cookie service
+     */
+    init(): void {
         this.cookieConsentBS = new BehaviorSubject<CookieConsent>(this._cookieConsent);
-        const item = sessionStorage.getItem('cookieConsent');
+        const item = localStorage.getItem('cookieConsent');
         if (item) {
             this._cookieConsent = JSON.parse(item);
             this.showCookieBanner.next(false);
@@ -39,6 +46,8 @@ export class CookieService {
                 comfort: false
             };
         }
+
+        console.log('[CookieService] initialized.');
     }
 
     public getCookieConsent(): Observable<CookieConsent> {
@@ -53,7 +62,7 @@ export class CookieService {
         this._cookieConsent = consent;
         this.cookieConsentBS.next(consent);
         this.showCookieBanner.next(false);
-        sessionStorage.setItem('cookieConsent', JSON.stringify(consent));
+        localStorage.setItem('cookieConsent', JSON.stringify(consent));
         console.log('[CookieService] Cookie settings saved: ', consent);
 
         if (this._cookieConsent.analythics && this.gaTrackingId) {
