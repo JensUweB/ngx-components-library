@@ -1,3 +1,12 @@
+$color-cookie-background: #f5f5f5 !default;
+$color-cookie-checkbox-border: #8c8c8c !default;
+$color-cookie-checkmark: #fff !default;
+$color-cookie-primary: #16168a !default;
+$color-cookie-secondary: #00d5ff !default;
+$color-cookie-text: #000 !default;
+$color-cookie-btn-text: #fff !default;
+$color-cookie-shadow: #000 !default;
+
 $breakpoints: (
   xs: 576px,
   sm: 768px,
@@ -38,6 +47,7 @@ $breakpoints: (
     transform: translateX(-50%);
     animation: 1s ease-out forwards slideInFromBottom;
     background-color: $color-cookie-background;
+    color: $color-cookie-text;
     text-align: center;
 
     @include respond-below(xs) {
@@ -106,7 +116,7 @@ $breakpoints: (
             height: 4rem;
             margin-right: 1rem;
             color: transparent;
-            border: 1px solid $color-grey;
+            border: 1px solid $color-cookie-checkbox-border;
 
             @include respond-below(xs) {
                 width: 3rem;
@@ -116,8 +126,8 @@ $breakpoints: (
     }
 
     &__checkbox:checked + &__checkbox-label::before {
-        color: #fff;
-        background-color: $color-primary;
+        color: $color-cookie-checkmark;
+        background-color: $color-cookie-primary;
     }
 
     &__button-wrap {
@@ -142,13 +152,13 @@ $breakpoints: (
 
         &--primary {
             display: inline-block;
-            color: $color-white;
-            background-color: $color-primary;
+            color: $color-cookie-btn-text;
+            background-color: $color-cookie-primary;
             padding: .5rem 1.5rem;
 
             &:hover {
-                background-color: $color-secondary;
-                box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+                background-color: $color-cookie-secondary;
+                box-shadow: 0 1rem 2rem rgba($color-cookie-shadow, 0.2);
                 transform: translateY(-3px);
             }
         }
@@ -157,8 +167,8 @@ $breakpoints: (
             text-decoration: underline;
 
             &:hover {
-                color: $color-secondary;
-                box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+                color: $color-cookie-secondary;
+                box-shadow: 0 1rem 2rem rgba($color-cookie-shadow, 0.2);
                 transform: translateY(-3px);
             }
         }
