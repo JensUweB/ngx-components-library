@@ -42,6 +42,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
+import { CookieOption, Options } from 'projects/cookie-banner/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -49,18 +50,15 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public cookieOptions = {
+  public cookieOptions: Options = {
     title: 'Banner Title',
     description: 'I respect your privacy and will only load the cookies, you want',
     buttonAll: 'Acceppt all',
     buttonSelected: 'Accept only selected',
-    // Setting label value to null will hide corresponding checkbox
-    // Hidden checkboxes are always set to false
     labelNecessary: 'Necessary',
-    labelAnalythics: 'Analythics',
-    labelMarketing: null,
-    labelPreferences: null,
-    labelComfort: null,
+    options: [
+      new CookieOption({value: 'analythics', label: 'Analythics'})
+    ]
   };
 
   constructor() {}
@@ -69,7 +67,9 @@ export class AppComponent {
 > Add cookie banner to your app.component.html. If you use angular universal, don't forget to show banner only on platform browser, or it will throw errors.
 ``` html
 <router-outlet></router-outlet>
-<lib-cookie-banner [options]="cookieOptions"></lib-cookie-banner>
+<lib-cookie-banner [options]="cookieOptions">
+  <p>This is some custom html displayed above the checkboxes.</p>
+</lib-cookie-banner>
 ```
 The CookieConsent object, which includes the user cookie selection, will be stored in "cookieConsent" localStorage variable.
 
@@ -82,13 +82,15 @@ export class AppComponent {
     constructor(private cookieService: CookieService) {
         this.cookieService.getCookieConsent().subscribe({
             next: (result: CookieConsent) => {
-                if (result.analythics) {
-                    this.cookieService.loadGoogleAnalytics('myTrackingId');
+                if (result && result.options) {
+                  result.options.forEach((option) => {
+                    if (option.value === 'analythics' && option.checked) {
+                      // If you added an option with label "analythics, this is handled automatically
+                      this.cookieService.loadGoogleAnalytics('myTrackingId');
+                    }
+                    // ...more cookie consent options...
+                  });
                 }
-                if (result.marketing) {
-                // enable your marketing stuff here
-                }
-                // ...more cookie consent options...
             }
         });
     }
