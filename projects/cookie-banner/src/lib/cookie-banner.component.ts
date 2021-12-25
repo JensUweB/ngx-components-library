@@ -1,25 +1,36 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { CookieService } from './cookie.service';
+
+export class CookieOption {
+  value: string = '';
+  label: string = '';
+  checked: boolean = false;
+
+  constructor(input?) {
+    if (input) {
+      this.value = input.value;
+      this.label = input.label;
+    }
+  }
+}
+
+export interface Options {
+  title: string;
+  description: string;
+  buttonAll: string;
+  buttonSelected: string;
+  labelNecessary: string;
+  options: CookieOption[];
+}
 
 @Component({
   selector: 'lib-cookie-banner',
   templateUrl: './cookie-banner.component.html'
 })
 export class CookieBannerComponent implements OnInit {
-  @Input() options: {
-    title: string;
-    description: string;
-    buttonAll: string;
-    buttonSelected: string;
-    labelNecessary: string;
-    labelAnalythics: string;
-    labelMarketing: string;
-    labelPreferences: string;
-    labelComfort: string;
-  };
+  @Input() options: Options;
   showBanner: boolean;
-  cookieForm: FormGroup;
 
   constructor(private fb: FormBuilder, private cookieService: CookieService) {
     if (!this.options) {
@@ -28,21 +39,13 @@ export class CookieBannerComponent implements OnInit {
         description: '',
         buttonAll: 'Alle Cookies akzeptieren',
         buttonSelected: 'Nur ausgewählte akzeptieren',
-        labelNecessary: '',
-        labelAnalythics: '',
-        labelMarketing: '',
-        labelPreferences: '',
-        labelComfort: '',
+        labelNecessary: 'Notwendig',
+        options: []
       };
     }
-
-    this.cookieForm = this.fb.group({
-      necessary: true,
-      analythics: false,
-      marketing: false,
-      preferences: false,
-      comfort: false
-    });
+    this.options.options.push(
+      new CookieOption({value: 'necessary', label: 'Notwendig'})
+      );
 
     // tslint:disable-next-line: deprecation
     this.cookieService.showCookieBanner.subscribe({
@@ -60,17 +63,13 @@ export class CookieBannerComponent implements OnInit {
 
   saveCookies(all?: boolean): void {
     if (all) {
-        this.cookieForm.get('analythics').setValue(this.options.labelAnalythics ? true : false);
-        this.cookieForm.get('marketing').setValue(this.options.labelMarketing ? true : false);
-        this.cookieForm.get('preferences').setValue(this.options.labelPreferences ? true : false);
-        this.cookieForm.get('comfort').setValue(this.options.labelComfort ? true : false);
+        for (const item of this.options.options) {
+          item.checked = true;
+        }
     }
     this.cookieService.setCookieConsent({
       necessary: true,
-      analythics: this.cookieForm.get('analythics').value,
-      marketing: this.cookieForm.get('marketing').value,
-      preferences: this.cookieForm.get('preferences').value,
-      comfort: this.cookieForm.get('comfort').value
+      options: this.options.options
     });
 
     this.bannerFadeOut();

@@ -1,14 +1,11 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { CookieOption } from './cookie-banner.component';
 
 export class CookieConsent {
     necessary: boolean;
-    analythics: boolean;
-    marketing: boolean;
-    preferences: boolean;
-    comfort: boolean;
+    options: CookieOption[];
 }
 
 // tslint:disable-next-line: ban-types
@@ -25,6 +22,7 @@ export class CookieService {
     private _cookieConsent: CookieConsent;
 
     constructor(private router: Router) {
+        this.init();
     }
 
     /**
@@ -40,10 +38,7 @@ export class CookieService {
         } else {
             this._cookieConsent = {
                 necessary: true,
-                analythics: false,
-                marketing: false,
-                preferences: false,
-                comfort: false
+                options: []
             };
         }
 
@@ -55,7 +50,8 @@ export class CookieService {
     }
 
     /**
-     * Saves cookieConsent to session storage and loads Google Analythics, if allowed & analythicsId set.
+     * Saves cookieConsent to session storage and loads Google Analythics, if option with label analythics
+     *  & analythicsId are set.
      * @param consent cookie consent object
      */
     public setCookieConsent(consent: CookieConsent): void {
@@ -65,9 +61,10 @@ export class CookieService {
         localStorage.setItem('cookieConsent', JSON.stringify(consent));
         console.log('[CookieService] Cookie settings saved: ', consent);
 
-        if (this._cookieConsent.analythics && this.gaTrackingId) {
+        if (this._cookieConsent.options.find(i => i.label === 'analythics' && i.checked)
+         && this.gaTrackingId) {
             this.loadGoogleAnalytics(this.gaTrackingId);
-        }
+         }
     }
 
     /**
@@ -93,9 +90,10 @@ export class CookieService {
 
         // Tell google analythics that the sub page has changed
         this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd && this._cookieConsent.analythics){
+             if (event instanceof NavigationEnd
+                && this._cookieConsent.options.find(i => i.label === 'analythics' && i.checked)){
                 gtag('config', this.gaTrackingId, { page_path: event.urlAfterRedirects });
-            }
+             }
         });
     }
 }

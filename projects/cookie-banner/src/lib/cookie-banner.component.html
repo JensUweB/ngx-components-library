@@ -1,32 +1,18 @@
 <div class="cookie-banner" id="cookie-banner">
     <h1 class="cookie-banner__title">{{options.title}}</h1>
     <p class="cookie-banner__description">{{options.description}}</p>
-    <form [formGroup]="cookieForm" class="cookie-banner__checkbox-container">
+    <ng-content></ng-content>
+    <div class="cookie-banner__checkbox-container">
         <span class="cookie-banner__checkbox-wrap">
             <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_necessary" checked disabled>
             <label class="cookie-banner__checkbox-label" for="checkbox_necessary">{{options.labelNecessary}}</label>
         </span>
 
-        <span *ngIf="options.labelMarketing" class="cookie-banner__checkbox-wrap">
-            <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_marketing" formControlName="marketing">
-            <label class="cookie-banner__checkbox-label" for="checkbox_marketing">{{options.labelMarketing}}</label>
+        <span class="cookie-banner__checkbox-wrap" *ngFor="let option of options.options">
+            <input type="checkbox" class="cookie-banner__checkbox" [id]="'checkbox_' + option.value" [(ngModel)]="option.checked">
+            <label class="cookie-banner__checkbox-label" [for]="'checkbox_' + option.value">{{option.label}}</label>
         </span>
-
-        <span *ngIf="options.labelAnalythics" class="cookie-banner__checkbox-wrap">
-            <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_analythics" formControlName="analythics">
-            <label class="cookie-banner__checkbox-label" for="checkbox_analythics">{{options.labelAnalythics}}</label>
-        </span>
-
-        <span *ngIf="options.labelPreferences" class="cookie-banner__checkbox-wrap">
-            <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_preferences" formControlName="preferences">
-            <label class="cookie-banner__checkbox-label" for="checkbox_preferences">{{options.labelPreferences}}</label>
-        </span>
-
-        <span *ngIf="options.labelComfort" class="cookie-banner__checkbox-wrap">
-            <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_comfort" formControlName="comfort">
-            <label class="cookie-banner__checkbox-label" for="checkbox_comfort">{{options.labelComfort}}</label>
-        </span>
-    </form>
+    </div>
     <div class="cookie-banner__button-wrap">
         <a class="cookie-banner__button cookie-banner__button--outline" (click)="saveCookies()">{{options.buttonSelected}}</a>
         <a class="cookie-banner__button cookie-banner__button--primary" (click)="saveCookies(true)">{{options.buttonAll}}</a>
