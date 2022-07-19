@@ -25,8 +25,8 @@ export interface Options {
 }
 
 @Component({
-  selector: 'lib-cookie-banner',
-  templateUrl: './cookie-banner.component.html'
+  selector: 'ngx-cookie-banner',
+  templateUrl: './cookie-banner.component.html',
 })
 export class CookieBannerComponent implements OnInit {
   @Input() options: Options;
@@ -40,18 +40,18 @@ export class CookieBannerComponent implements OnInit {
         buttonAll: 'Alle Cookies akzeptieren',
         buttonSelected: 'Nur ausgewählte akzeptieren',
         labelNecessary: 'Notwendig',
-        options: []
+        options: [],
       };
     }
     this.options.options.push(
-      new CookieOption({value: 'necessary', label: 'Notwendig'})
-      );
+      new CookieOption({ value: 'necessary', label: 'Notwendig' })
+    );
 
     // tslint:disable-next-line: deprecation
     this.cookieService.showCookieBanner.subscribe({
       next: (data) => {
         this.showBanner = data;
-      }
+      },
     });
   }
 
@@ -63,13 +63,13 @@ export class CookieBannerComponent implements OnInit {
 
   saveCookies(all?: boolean): void {
     if (all) {
-        for (const item of this.options.options) {
-          item.checked = true;
-        }
+      for (const item of this.options.options) {
+        item.checked = true;
+      }
     }
     this.cookieService.setCookieConsent({
       necessary: true,
-      options: this.options.options
+      options: this.options.options,
     });
 
     this.bannerFadeOut();
@@ -79,5 +79,4 @@ export class CookieBannerComponent implements OnInit {
     const doc = document.getElementById('cookie-banner') as HTMLDivElement;
     doc.style.animation = time + 's ease-out forwards slideOutToBottom';
   }
-
 }
