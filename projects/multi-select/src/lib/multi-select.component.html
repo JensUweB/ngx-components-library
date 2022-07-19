@@ -1,0 +1,45 @@
+<div class="dropdown" (mouseleave)="showDropDown = false">
+  <button
+    class="dropdown__toggle"
+    (click)="showDropDown = !showDropDown"
+    [disabled]="disabled"
+  >
+    <span *ngIf="selected.length <= 0">{{ placeholder }}</span>
+    <span *ngIf="selected.length > 0">
+      <span *ngFor="let item of selected" class="dropdown__toggle--item">
+        {{ item[options.labelKey] }}
+        <span (click)="!disabled ? removeItem(item) : null">X</span>
+      </span>
+    </span>
+    <i class="fa fa-angle-down" style="margin-top: 8px"></i>
+  </button>
+  <div class="dropdown__show" *ngIf="showDropDown">
+    <ng-container *ngIf="groups.length > 0; else noGroups">
+      <ng-container *ngFor="let group of groups">
+        <span class="dropdown__group-label">{{
+          groupLabels ? groupLabels[group] : group
+        }}</span>
+        <label *ngFor="let item of getByGroup(group)">
+          <input
+            type="checkbox"
+            [checked]="isSelected(item)"
+            (change)="updateSelection(item)"
+            [disabled]="!canSelectItem(item)"
+          />
+          <span>{{ item[options.labelKey] }}</span>
+        </label>
+      </ng-container>
+    </ng-container>
+    <ng-template #noGroups>
+      <label *ngFor="let item of data">
+        <input
+          type="checkbox"
+          [checked]="isSelected(item)"
+          (change)="updateSelection(item)"
+          [disabled]="!canSelectItem(item)"
+        />
+        <span>{{ item[options.labelKey] }}</span>
+      </label>
+    </ng-template>
+  </div>
+</div>

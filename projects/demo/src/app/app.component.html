@@ -1,3 +1,9 @@
+<ngx-multi-select
+  [(ngModel)]="selectedItem"
+  [data]="selectData"
+  [options]="selectOptions"
+  (ngModelChange)="onMultiSelectChange($event)"
+></ngx-multi-select>
 <ngx-cookie-banner [options]="options">
   <p>Das ist noch eine Beschreibung!</p>
 </ngx-cookie-banner>

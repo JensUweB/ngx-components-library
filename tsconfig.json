@@ -19,6 +19,10 @@
       "cookie-banner": [
         "dist/cookie-banner/cookie-banner",
         "dist/cookie-banner"
+      ],
+      "multi-select": [
+        "dist/multi-select/multi-select",
+        "dist/multi-select"
       ]
     }
   }
