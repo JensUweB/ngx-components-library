@@ -85,30 +85,23 @@ export class CookieService {
    * @param trackingID google analythics id, beginnning with "UA-"
    */
   loadGoogleAnalytics(trackingID: string): void {
-    // Insert google analythics scripts
-    const gaScript = document.createElement('script');
-    gaScript.setAttribute('async', 'true');
-    gaScript.setAttribute(
-      'src',
-      `https://www.googletagmanager.com/gtag/js?id=${trackingID}`
-    );
-    gaScript.id = 'gaScript1';
+    // Insert Google Analytics scripts
+    const gtmScript: HTMLScriptElement = this.dom.createElement('script');
+    gtmScript.setAttribute('data-cookieconsent', 'ignore');
+    gtmScript.text = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','${ trackingID }'); window.dataLayer = window.dataLayer || [];`;
+    this.dom.head.append(gtmScript);
 
-    const gaScript2 = document.createElement('script');
-    gaScript2.id = 'gaScript2';
-    gaScript2.innerText = `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag(\'js\', new Date());gtag(\'config\', \'${trackingID}\');`;
+    const noscript: HTMLElement = this.dom.createElement('noscript');
+    noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${ trackingID }" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    this.dom.body.append(noscript);
 
-    document.documentElement.firstChild.appendChild(gaScript);
-    document.documentElement.firstChild.appendChild(gaScript2);
-
-    // Tell google analythics that the sub page has changed
+    // Tell Google Analytics that the sub page has changed
     this.router.events.subscribe((event) => {
-      if (
-        event instanceof NavigationEnd &&
-        this._cookieConsent.options.find(
-          (i) => i.label === 'analythics' && i.checked
-        )
-      ) {
+      if (event instanceof NavigationEnd) {
         gtag('config', this.gaTrackingId, {
           page_path: event.urlAfterRedirects,
         });
