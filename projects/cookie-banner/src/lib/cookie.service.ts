@@ -75,24 +75,45 @@ export class CookieService {
       ) &&
       this.gaTrackingId
     ) {
-      this.loadGoogleAnalytics(this.gaTrackingId);
+      this.loadGoogleAnalytics(
+        this.gaTrackingId,
+        this.gaTrackingId.startsWith('UA') ? 'ua' : 'ga4'
+      );
     }
   }
 
   /**
    * Inserts Google Analythics scripts into the head.
    * If the user is navigating to another sub page, google analythics will be updated accordingly.
-   * @param trackingID google analythics id, beginnning with "UA-"
+   *
+   * @param trackingID Google Analytics id, beginnning with "UA-" or "G-"
+   * @param type Your Google Analythics type
    */
-  loadGoogleAnalytics(trackingID: string): void {
+  loadGoogleAnalytics(trackingID: string, type: 'ua' | 'ga4' = 'ua'): void {
     // Insert Google Analytics scripts
     const gtmScript: HTMLScriptElement = document.createElement('script');
-    gtmScript.setAttribute('data-cookieconsent', 'ignore');
-    gtmScript.text = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','${trackingID}'); window.dataLayer = window.dataLayer || [];`;
+    const script = document.createElement('script');
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${trackingID}`;
+
+    switch (type) {
+      case 'ga4':
+        gtmScript.text = `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${trackingID}');`;
+        break;
+      case 'ua':
+      default:
+        gtmScript.setAttribute('data-cookieconsent', 'ignore');
+        gtmScript.text = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','${trackingID}'); window.dataLayer = window.dataLayer || [];`;
+        break;
+    }
+
+    document.head.appendChild(script);
     document.head.append(gtmScript);
 
     const noscript: HTMLElement = document.createElement('noscript');
