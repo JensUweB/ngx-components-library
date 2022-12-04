@@ -1,6 +1,8 @@
 # CookieBanner
+![](https://img.shields.io/badge/NPM-v14.21.1-red?logo=npm)
+![](https://img.shields.io/badge/Angular-v13.31.12-red?logo=angular)
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.9.
+This Library is a simple configurable cookie banner component.
 
 ## Usage
 
