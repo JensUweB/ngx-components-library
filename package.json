@@ -1,6 +1,8 @@
 {
   "name": "ngx-components-library",
   "version": "0.0.0",
+  "author": "Jens Uwe Becker",
+  "website": "https://root-itsolutions.de",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
