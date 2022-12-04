@@ -18,12 +18,14 @@ export class CookieService {
   public showCookieBanner = new BehaviorSubject<boolean>(true);
   public gaTrackingId: string;
 
+  private isBrowser = false;
   private cookieConsentBS: BehaviorSubject<CookieConsent>;
   // tslint:disable-next-line: variable-name
   private _cookieConsent: CookieConsent;
 
   constructor(@Inject(PLATFORM_ID) platformId: string, private router: Router) {
-    if (isPlatformBrowser(platformId)) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
       this.init();
     }
   }
@@ -32,6 +34,9 @@ export class CookieService {
    * Initializes the cookie service
    */
   init(): void {
+    if (!this.isBrowser) {
+      return;
+    }
     this.cookieConsentBS = new BehaviorSubject<CookieConsent>(
       this._cookieConsent
     );
@@ -66,6 +71,9 @@ export class CookieService {
    * @param consent cookie consent object
    */
   public setCookieConsent(consent: CookieConsent): void {
+    if (!this.isBrowser) {
+      return;
+    }
     this._cookieConsent = consent;
     this.cookieConsentBS.next(consent);
     this.showCookieBanner.next(false);
@@ -93,6 +101,9 @@ export class CookieService {
    * @param type Your Google Analythics type
    */
   loadGoogleAnalytics(trackingID: string, type: 'ua' | 'ga4' = 'ua'): void {
+    if (!this.isBrowser) {
+      return;
+    }
     // Insert Google Analytics scripts
     const gtmScript: HTMLScriptElement = document.createElement('script');
     const script = document.createElement('script');
