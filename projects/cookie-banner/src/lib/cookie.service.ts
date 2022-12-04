@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,8 +22,10 @@ export class CookieService {
   // tslint:disable-next-line: variable-name
   private _cookieConsent: CookieConsent;
 
-  constructor(private router: Router) {
-    this.init();
+  constructor(@Inject(PLATFORM_ID) platformId: string, private router: Router) {
+    if (isPlatformBrowser(platformId)) {
+      this.init();
+    }
   }
 
   /**
