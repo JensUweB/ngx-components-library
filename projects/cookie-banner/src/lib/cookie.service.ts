@@ -53,7 +53,7 @@ export class CookieService {
 
   public getOption(value: string) {
     return this.cookieConsentBS.pipe(
-      map((val) => val.options.find((i) => i.value === value))
+      map((val) => val?.options?.find((i) => i.value === value))
     );
   }
 
@@ -86,18 +86,18 @@ export class CookieService {
    */
   loadGoogleAnalytics(trackingID: string): void {
     // Insert Google Analytics scripts
-    const gtmScript: HTMLScriptElement = this.dom.createElement('script');
+    const gtmScript: HTMLScriptElement = document.createElement('script');
     gtmScript.setAttribute('data-cookieconsent', 'ignore');
     gtmScript.text = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','${ trackingID }'); window.dataLayer = window.dataLayer || [];`;
-    this.dom.head.append(gtmScript);
+    })(window,document,'script','dataLayer','${trackingID}'); window.dataLayer = window.dataLayer || [];`;
+    document.head.append(gtmScript);
 
-    const noscript: HTMLElement = this.dom.createElement('noscript');
-    noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${ trackingID }" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
-    this.dom.body.append(noscript);
+    const noscript: HTMLElement = document.createElement('noscript');
+    noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${trackingID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.append(noscript);
 
     // Tell Google Analytics that the sub page has changed
     this.router.events.subscribe((event) => {
