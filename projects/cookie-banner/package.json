@@ -1,6 +1,6 @@
 {
   "name": "@jensuweb/ngx-cookie-banner",
-  "version": "13.0.1",
+  "version": "14.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^14.3.0",
