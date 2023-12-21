@@ -1,12 +1,3 @@
-$color-cookie-background: #f5f5f5 !default;
-$color-cookie-checkbox-border: #8c8c8c !default;
-$color-cookie-checkmark: #fff !default;
-$color-cookie-primary: #16168a !default;
-$color-cookie-secondary: #00d5ff !default;
-$color-cookie-text: #000 !default;
-$color-cookie-btn-text: #fff !default;
-$color-cookie-shadow: #000 !default;
-
 $breakpoints: (
   xs: 576px,
   sm: 768px,
@@ -14,6 +5,17 @@ $breakpoints: (
   lg: 1200px,
   xlg: 1600px
 );
+
+:root {
+    --color-cookie-background: #f5f5f5;
+    --color-cookie-checkbox-border: #8c8c8c;
+    --color-cookie-checkmark: #fff;
+    --color-cookie-primary: #16168a;
+    --color-cookie-secondary: #00d5ff;
+    --color-cookie-text: #000;
+    --color-cookie-btn-text: #fff;
+    --color-cookie-shadow: #000;
+}
 
 @mixin respond-below($breakpoint) {
 
@@ -46,8 +48,8 @@ $breakpoints: (
     padding: 2rem 1.5rem;
     transform: translateX(-50%);
     animation: 1s ease-out forwards slideInFromBottom;
-    background-color: $color-cookie-background;
-    color: $color-cookie-text;
+    background-color: var(--color-cookie-background);
+    color: var(--color-cookie-text);
     text-align: center;
 
     @include respond-below(xs) {
@@ -116,7 +118,7 @@ $breakpoints: (
             height: 4rem;
             margin-right: 1rem;
             color: transparent;
-            border: 1px solid $color-cookie-checkbox-border;
+            border: 1px solid var(--color-cookie-checkbox-border);
 
             @include respond-below(xs) {
                 width: 3rem;
@@ -126,8 +128,8 @@ $breakpoints: (
     }
 
     &__checkbox:checked + &__checkbox-label::before {
-        color: $color-cookie-checkmark;
-        background-color: $color-cookie-primary;
+        color: var(--color-cookie-checkmark);
+        background-color: var(--color-cookie-primary);
     }
 
     &__button-wrap {
@@ -152,13 +154,13 @@ $breakpoints: (
 
         &--primary {
             display: inline-block;
-            color: $color-cookie-btn-text;
-            background-color: $color-cookie-primary;
+            color: var(--color-cookie-btn-text);
+            background-color: var(--color-cookie-primary);
             padding: .5rem 1.5rem;
 
             &:hover {
-                background-color: $color-cookie-secondary;
-                box-shadow: 0 1rem 2rem rgba($color-cookie-shadow, 0.2);
+                background-color: var(--color-cookie-secondary);
+                box-shadow: 0 1rem 2rem rgba(var(--color-cookie-shadow), 0.2);
                 transform: translateY(-3px);
             }
         }
@@ -167,8 +169,8 @@ $breakpoints: (
             text-decoration: underline;
 
             &:hover {
-                color: $color-cookie-secondary;
-                box-shadow: 0 1rem 2rem rgba($color-cookie-shadow, 0.2);
+                color: var(--color-cookie-secondary);
+                box-shadow: 0 1rem 2rem rgba(var(--color-cookie-shadow), 0.2);
                 transform: translateY(-3px);
             }
         }
