@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { CookieService } from './cookie.service';
 
 export class CookieOption {
@@ -32,7 +32,7 @@ export class CookieBannerComponent implements OnInit {
   @Input() options: Options;
   showBanner: boolean;
 
-  constructor(private fb: FormBuilder, private cookieService: CookieService) {
+  constructor(private fb: UntypedFormBuilder, private cookieService: CookieService) {
     if (!this.options) {
       this.options = {
         title: '',
