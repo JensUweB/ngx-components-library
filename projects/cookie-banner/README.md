@@ -28,17 +28,18 @@ export class AppModule {}
 
 > Import library styles in your public scss file and set color variables.
 > Instead of importing, you can copy the scss code and modify it to your needs. Don't forget to place it inside your public styles, otherwise it will not work.
+> *Please keep in mind that we use css variables since version v14.0.0*
 
 ```scss
 // Set colors as you like. The following are the default colors.
-$color-cookie-background: #c4c4c4;
-$color-cookie-checkbox-border: #8c8c8c;
-$color-cookie-checkmark: #fff;
-$color-cookie-primary: #16168a;
-$color-cookie-secondary: #00d5ff;
-$color-cookie-text: #000;
-$color-cookie-btn-text: #fff;
-$color-cookie-shadow: #000;
+  --color-cookie-background: #f5f5f5;
+  --color-cookie-checkbox-border: #8c8c8c;
+  --color-cookie-checkmark: #fff;
+  --color-cookie-primary: #16168a;
+  --color-cookie-secondary: #00d5ff;
+  --color-cookie-text: #000;
+  --color-cookie-btn-text: #fff;
+  --color-cookie-shadow: #000;
 @import "@jensuweb/ngx-cookie-banner/src/lib/cookie-banner.component.scss";
 ```
 
