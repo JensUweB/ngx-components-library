@@ -1,6 +1,6 @@
 # CookieBanner
-![](https://img.shields.io/badge/NPM-v18.18.2-red?logo=npm)
-![](https://img.shields.io/badge/Angular-v16.2.12-red?logo=angular)
+![](https://img.shields.io/badge/NPM-v18-red?logo=npm)
+![](https://img.shields.io/badge/Angular-v17-red?logo=angular)
 
 This Library is a simple configurable cookie banner component.
 
@@ -69,7 +69,7 @@ export class AppComponent {
     buttonAll: "Acceppt all",
     buttonSelected: "Accept only selected",
     labelNecessary: "Necessary",
-    options: [new CookieOption({ value: "analythics", label: "Analythics" })],
+    options: [new CookieOption({ value: "analytics", label: "Analytics" })],
   };
 
   constructor(cookieService: CookieService) {
@@ -101,13 +101,13 @@ export class AppComponent {
     this.cookieService.getCookieConsent().subscribe({
       next: (result: CookieConsent) => {
         if (result && result.options) {
-          result.options.forEach((option) => {
-            if (option.value === "analythics" && option.checked) {
-              // If you added an option with label "analythics, this is handled automatically
+          for (let option of result.options) {
+            if (option.value === "analytics" && option.checked) {
+              // If you added an option with label "analytics, this is handled automatically
               this.cookieService.loadGoogleAnalytics("myTrackingId");
             }
             // ...more cookie consent options...
-          });
+          }
         }
       },
     });
