@@ -147,6 +147,7 @@ $breakpoints: (
         text-transform: uppercase;
         cursor: pointer;
         border-radius: 10rem;
+        border-color: transparent;
 
         @include respond-below(xs) {
             font-size: 1.5rem;

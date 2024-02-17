@@ -1,4 +1,4 @@
-<div class="cookie-banner" id="cookie-banner">
+<section class="cookie-banner" id="cookie-banner">
     <h1 class="cookie-banner__title">{{options.title}}</h1>
     <p class="cookie-banner__description">{{options.description}}</p>
     <ng-content></ng-content>
@@ -9,12 +9,32 @@
         </span>
 
         <span class="cookie-banner__checkbox-wrap" *ngFor="let option of options.options">
-            <input type="checkbox" class="cookie-banner__checkbox" [id]="'checkbox_' + option.value" [(ngModel)]="option.checked">
+            <input
+              type="checkbox"
+              class="cookie-banner__checkbox"
+              [id]="'checkbox_' + option.value"
+              [(ngModel)]="option.checked"
+              [attr.aria-checked]="option.checked"
+            >
             <label class="cookie-banner__checkbox-label" [for]="'checkbox_' + option.value">{{option.label}}</label>
         </span>
     </div>
     <div class="cookie-banner__button-wrap">
-        <a class="cookie-banner__button cookie-banner__button--outline" (click)="saveCookies()">{{options.buttonSelected}}</a>
-        <a class="cookie-banner__button cookie-banner__button--primary" (click)="saveCookies(true)">{{options.buttonAll}}</a>
+        <button
+          id="cookie-banner-accept-selected"
+          aria-label="Accept selected cookies"
+          class="cookie-banner__button cookie-banner__button--outline"
+         (click)="saveCookies()"
+        >
+         {{options.buttonSelected}}
+        </button>
+        <button
+          id="cookie-banner-accept-all"
+          aria-label="Accept all cookies"
+          class="cookie-banner__button cookie-banner__button--primary"
+          (click)="saveCookies(true)"
+        >
+          {{options.buttonAll}}
+        </button>
     </div>
-</div>
+</section>
