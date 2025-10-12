@@ -1,6 +1,6 @@
 # CookieBanner
 ![](https://img.shields.io/badge/NPM-v22-red?logo=npm)
-![](https://img.shields.io/badge/Angular-v19-red?logo=angular)
+![](https://img.shields.io/badge/Angular-v20-red?logo=angular)
 
 This Library is a simple configurable cookie banner component.
 

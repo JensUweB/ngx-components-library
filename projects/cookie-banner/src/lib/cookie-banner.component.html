@@ -1,40 +1,42 @@
 <section class="cookie-banner" id="cookie-banner">
-    <h1 class="cookie-banner__title">{{options.title}}</h1>
-    <p class="cookie-banner__description">{{options.description}}</p>
-    <ng-content></ng-content>
-    <div class="cookie-banner__checkbox-container">
-        <span class="cookie-banner__checkbox-wrap">
-            <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_necessary" checked disabled>
-            <label class="cookie-banner__checkbox-label" for="checkbox_necessary">{{options.labelNecessary}}</label>
-        </span>
+  <h1 class="cookie-banner__title">{{options.title}}</h1>
+  <p class="cookie-banner__description">{{options.description}}</p>
+  <ng-content></ng-content>
+  <div class="cookie-banner__checkbox-container">
+    <span class="cookie-banner__checkbox-wrap">
+      <input type="checkbox" class="cookie-banner__checkbox" id="checkbox_necessary" checked disabled>
+      <label class="cookie-banner__checkbox-label" for="checkbox_necessary">{{options.labelNecessary}}</label>
+    </span>
 
-        <span class="cookie-banner__checkbox-wrap" *ngFor="let option of options.options">
-            <input
-              type="checkbox"
-              class="cookie-banner__checkbox"
-              [id]="'checkbox_' + option.value"
-              [(ngModel)]="option.checked"
-              [attr.aria-checked]="option.checked"
-            >
-            <label class="cookie-banner__checkbox-label" [for]="'checkbox_' + option.value">{{option.label}}</label>
+    @for (option of options.options; track option) {
+      <span class="cookie-banner__checkbox-wrap">
+        <input
+          type="checkbox"
+          class="cookie-banner__checkbox"
+          [id]="'checkbox_' + option.value"
+          [(ngModel)]="option.checked"
+          [attr.aria-checked]="option.checked"
+          >
+          <label class="cookie-banner__checkbox-label" [for]="'checkbox_' + option.value">{{option.label}}</label>
         </span>
+      }
     </div>
     <div class="cookie-banner__button-wrap">
-        <button
-          id="cookie-banner-accept-selected"
-          aria-label="Accept selected cookies"
-          class="cookie-banner__button cookie-banner__button--outline"
-         (click)="saveCookies()"
+      <button
+        id="cookie-banner-accept-selected"
+        aria-label="Accept selected cookies"
+        class="cookie-banner__button cookie-banner__button--outline"
+        (click)="saveCookies()"
         >
-         {{options.buttonSelected}}
-        </button>
-        <button
-          id="cookie-banner-accept-all"
-          aria-label="Accept all cookies"
-          class="cookie-banner__button cookie-banner__button--primary"
-          (click)="saveCookies(true)"
+        {{options.buttonSelected}}
+      </button>
+      <button
+        id="cookie-banner-accept-all"
+        aria-label="Accept all cookies"
+        class="cookie-banner__button cookie-banner__button--primary"
+        (click)="saveCookies(true)"
         >
-          {{options.buttonAll}}
-        </button>
+        {{options.buttonAll}}
+      </button>
     </div>
-</section>
+  </section>
