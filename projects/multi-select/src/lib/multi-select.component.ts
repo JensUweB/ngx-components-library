@@ -12,16 +12,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MultiSelectOptions } from './options.interface';
 
 @Component({
-  selector: 'ngx-multi-select',
-  templateUrl: 'multi-select.component.html',
-  styleUrls: ['multi-select.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MultiSelectComponent),
-      multi: true,
-    },
-  ],
+    selector: 'ngx-multi-select',
+    templateUrl: 'multi-select.component.html',
+    styleUrls: ['multi-select.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => MultiSelectComponent),
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class MultiSelectComponent
   implements OnInit, OnChanges, ControlValueAccessor

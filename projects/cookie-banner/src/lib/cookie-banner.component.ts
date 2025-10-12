@@ -25,8 +25,9 @@ export interface Options {
 }
 
 @Component({
-  selector: 'ngx-cookie-banner',
-  templateUrl: './cookie-banner.component.html',
+    selector: 'ngx-cookie-banner',
+    templateUrl: './cookie-banner.component.html',
+    standalone: false
 })
 export class CookieBannerComponent implements OnInit {
   @Input() options: Options;

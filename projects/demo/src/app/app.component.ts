@@ -7,9 +7,10 @@ import {
 import { MultiSelectOptions } from 'projects/multi-select/src/lib/options.interface';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   // NgxCookieBanner
